@@ -24,7 +24,7 @@ public class SauceWebDriverWrapper implements WebDriver {
 
     public SauceWebDriverWrapper(WebDriver wrappedDriver) {
         this.wrappedDriver = wrappedDriver;
-        dumpSessionId();
+        dumpSessionId(wrappedDriver);
     }
 
     public WebDriver getWrappedDriver() {
@@ -34,9 +34,9 @@ public class SauceWebDriverWrapper implements WebDriver {
     /**
      * Dump the session ID, so that it can be captured by the CI server.
      */
-    private void dumpSessionId() {
-        if (wrappedDriver instanceof RemoteWebDriver) {
-            RemoteWebDriver remoteWebDriver = (RemoteWebDriver) wrappedDriver;
+    public static void dumpSessionId(WebDriver driver) {
+        if (driver instanceof RemoteWebDriver) {
+            RemoteWebDriver remoteWebDriver = (RemoteWebDriver) driver;
             SessionId lastSessionId = remoteWebDriver.getSessionId();
             if (lastSessionId != null) {
                 System.out.println("SauceOnDemandSessionID=" + lastSessionId.toString());

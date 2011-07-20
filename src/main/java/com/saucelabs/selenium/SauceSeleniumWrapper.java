@@ -18,24 +18,21 @@ import java.lang.reflect.Field;
 public class SauceSeleniumWrapper implements Selenium {
 
     private Selenium wrappedSelenium;
-    private String lastSessionId;
 
     public SauceSeleniumWrapper(Selenium wrappedSelenium) {
         this.wrappedSelenium = wrappedSelenium;
-        dumpSessionId();
     }
-
+    
     /**
      * Dump the session ID, so that it can be captured by the CI server.
      */
-    private void dumpSessionId() {
-        lastSessionId = getSessionId();
-        System.out.println("SauceOnDemandSessionID=" + lastSessionId);
+    public static void dumpSessionId(Selenium selenium) {
+        System.out.println("SauceOnDemandSessionID=" + getSessionId(selenium));
     }
 
-    public String getSessionId() {
-        if (wrappedSelenium instanceof DefaultSelenium) {
-            DefaultSelenium defaultSelenium = (DefaultSelenium) wrappedSelenium;
+    private static String getSessionId(Selenium selenium) {
+        if (selenium instanceof DefaultSelenium) {
+            DefaultSelenium defaultSelenium = (DefaultSelenium) selenium;
             try {
                 Field commandProcessorField = DefaultSelenium.class.getDeclaredField("commandProcessor");
                 commandProcessorField.setAccessible(true);
@@ -43,8 +40,8 @@ public class SauceSeleniumWrapper implements Selenium {
                 Field f = commandProcess.getClass().getDeclaredField("sessionId");
                 f.setAccessible(true);
                 Object id = f.get(commandProcess);
-                if (id != null) return id.toString();
-                return lastSessionId;
+                if (id != null) 
+                    return id.toString();
             } catch (NoSuchFieldException e) {
                 // failed to retrieve the session ID
             } catch (IllegalAccessException e) {
@@ -60,17 +57,17 @@ public class SauceSeleniumWrapper implements Selenium {
 
     public void start() {
         wrappedSelenium.start();
-        dumpSessionId();
+        dumpSessionId(wrappedSelenium);
     }
 
     public void start(String s) {
         wrappedSelenium.start(s);
-        dumpSessionId();
+        dumpSessionId(wrappedSelenium);
     }
 
     public void start(Object o) {
         wrappedSelenium.start(o);
-        dumpSessionId();
+        dumpSessionId(wrappedSelenium);
     }
 
     public void stop() {
