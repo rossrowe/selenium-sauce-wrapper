@@ -29,8 +29,8 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:git://github.com/saucelabs/selenium-sauce-wrapper.git</connection>
-        <developerConnection>>scm:git:git://github.com/saucelabs/selenium-sauce-wrapper.git</developerConnection>
+        <connection>scm:git:git://github.com/rossrowe/selenium-sauce-wrapper.git</connection>
+        <developerConnection>>scm:git:git://github.com/rossrowe/selenium-sauce-wrapper.git</developerConnection>
         <url>git@github.com:rossrowe/selenium-sauce-wrapper.git</url>
     </scm>
     <distributionManagement>
