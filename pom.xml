@@ -4,7 +4,7 @@
 
     <groupId>com.saucelabs</groupId>
     <artifactId>selenium-sauce-wrapper</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>Sauce OnDemand wrapper for Selenium</name>
     <packaging>jar</packaging>
     <description />
